@@ -4,7 +4,7 @@ services:
   web:
 #    build: .
     restart: always
-    image: ghcr.io/submarinonline/misskey
+    image: ghcr.io/submarinonline/misskey:release
     links:
       - db
       - redis
