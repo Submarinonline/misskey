@@ -10,7 +10,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: submarinonline/misskey
   NOTIFY_MSG: |
-    New release pushed!
+    New release pushed! \
     https://github.com/Submarinonline/misskey
 
 jobs:
