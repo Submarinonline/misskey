@@ -21,19 +21,23 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+
       - name: Setup buildx
         uses: docker/setup-buildx-action@v2
+
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
       - name: Log in to ghcr
         uses: docker/login-action@v2
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build and Push to ghcr
         uses: docker/build-push-action@v3
         with:
@@ -43,8 +47,9 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
       - name: Notify
         run: |
           curl -fsSL -XPOST \
-            -d"{\"i\":\"${{ secrets.MISSKEY_TOKEN }}\",\"text\":\"${{ env.NOTIFY_MSG }}\"}"
+            -d"{\"i\":\"${{ secrets.MISSKEY_TOKEN }}\",\"text\":\"${{ env.NOTIFY_MSG }}\"}" \
             ${{ secrets.MISSKEY_HOST }}/api/notes/create
