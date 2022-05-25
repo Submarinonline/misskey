@@ -10,7 +10,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: submarinonline/misskey
   NOTIFY_MSG: |
-    New release pushed! \
+    New release pushed!
     https://github.com/Submarinonline/misskey
 
 jobs:
@@ -51,5 +51,5 @@ jobs:
       - name: Notify
         run: |
           curl -fsSL -XPOST \
-            -d"{\"i\":\"${{ secrets.MISSKEY_TOKEN }}\",\"text\":\"${{ env.NOTIFY_MSG }}\"}" \
+            -d"{\"i\":\"${{ secrets.MISSKEY_TOKEN }}\",\"text\":\"${NOTIFY_MSG//$'\n'/\\n}\"}" \
             ${{ secrets.MISSKEY_HOST }}/api/notes/create
